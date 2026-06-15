@@ -1,0 +1,15 @@
+# No external dependencies required
+# All imports are from Python standard library:
+# - tkinter (GUI)
+# - threading (built-in)
+# - time (built-in)
+# - random (built-in)
+# - sys (built-in)
+# - os (built-in)
+# - datetime (built-in)
+
+# If using PyInstaller to build:
+pyinstaller>=5.0
+
+# Optional: For creating icons
+pillow>=9.0
