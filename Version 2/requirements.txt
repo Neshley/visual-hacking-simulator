@@ -1,0 +1,5 @@
+# Build requirements
+pyinstaller>=5.0
+
+# Optional
+pillow>=9.0; sys_platform == 'win32'
