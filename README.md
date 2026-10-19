@@ -1,388 +1,80 @@
+# 🖥️ System Update - Hacking Simulation (Version 2 — canonical)
 
-```markdown
-# 🖥️ System Update - Hacking Simulation
+> ⚠️ EDUCATIONAL SIMULATION — READ THIS FIRST
 
-> ⚠️ **EDUCATIONAL SIMULATION ONLY** - This software performs NO real hacking, does NOT encrypt files, and does NOT connect to any network. It is a visual simulation for educational/demonstration purposes.
+This repository contains a visual hacking/ransomware simulation implemented in Python + Tkinter for classroom and demonstration use only. The program displays a dual-panel "hacker" interface, a dramatic ransomware popup, a small "spy" window, and a fake Blue Screen of Death. It is intended to **simulate** the appearance and behavior of an attack for demonstration; it is not malware.
 
----
+## Important runtime behavior (accurate)
+- The packaged application is a local Tkinter GUI. It does not perform file encryption, does not install persistence, and does not modify the Windows registry or boot sector.
+- The application displays sample exploit scripts and text that look like real attack code; those examples are stored as strings and are displayed in the UI — they are not executed by the application.
+- The app obtains a local hostname/IP using socket.gethostbyname(socket.gethostname()) (Version 2) to show the "real IP" label. That call performs a local hostname lookup; it does not open a remote network connection. In atypical DNS configurations this can resolve externally — run in a controlled environment if you have concerns.
+- The UI logs keystrokes only to on-screen widgets (the app appends typed characters to GUI text widgets). The program does not write a separate logfile or transmit keystrokes anywhere.
+- No network sockets are created by the normal app flow. The only network-related code in the repository is either:
+  - calls used to look up the local host IP (safe/local), or
+  - string literals containing example exploit scripts (inert, displayed as text).
 
-## 📋 Table of Contents
-- [Description](#description)
-- [Features](#features)
-- [Timeline](#timeline)
-- [Installation](#installation)
-- [Usage](#usage)
-- [How to Exit](#how-to-exit)
-- [Build from Source](#build-from-source)
-- [Project Structure](#project-structure)
-- [Requirements](#requirements)
-- [Safety](#safety)
-- [FAQ](#faq)
-- [Screenshots](#screenshots)
-- [Disclaimer](#disclaimer)
+## What changed and where to run
+- Version 2/ is the canonical, actively maintained variant. Use `Version 2/hacker_sim.py` as the primary entrypoint.
+- Version 1/ is an earlier variant kept for reference; it contains a similar `hacker_sim.py` and README.
 
----
+## Build & Run (from source)
+1. Create and activate a Python virtual environment (recommended):
 
-## 📖 Description
-
-A dual-panel hacker interface simulation that creates a realistic-looking system breach scenario. Features a terminal with exploit scripts, hacking monitor with live logs, ransomware popup with countdown, fake Blue Screen of Death, and a security override system.
-
-**Built with:** Python 3 + Tkinter (standard library)
-
----
-
-## ✨ Features
-
-### Main Interface
-- 🔴 Fullscreen borderless window (no close/minimize/maximize buttons)
-- 💻 Left panel: Fake Kali Linux terminal with scrolling exploit commands
-- 📊 Right panel: Hacking monitor with live logs, progress bar, matrix rain
-- 🎯 Red crosshair cursor tracking
-- 📱 Fake Windows security toast notifications
-- 🔄 Scanning progress animations throughout
-
-### Ransomware Popup (appears after 60 seconds)
-- 💀 "YOU HAVE BEEN HACKED" header with rotating threats
-- 🔐 Files encrypted counter (continuously increasing)
-- 💰 Rotating Bitcoin wallet addresses
-- 🌐 Shows user's REAL local IP address
-- ⏰ 3-minute countdown with dramatic effects
-- ⛔ "DO NOT TURN OFF YOUR COMPUTER" warning
-- 📁 "ALL YOUR FILES WILL BE PERMANENTLY LOST" warnings
-- ❌ Close button runs away from mouse cursor
-- 💳 Fake payment button (always rejected)
-
-### Spy Window
-- 👁️ "WATCHING YOU" with animated eye
-- ⌨️ Keystroke counter
-- 🖱️ Click counter
-- 📁 Files encrypted counter
-- ⚠️ Escape attempt tracker
-
-### Blue Screen of Death (after countdown)
-- 💙 Authentic Windows BSOD appearance
-- 📜 40+ scrolling error codes
-- 🔁 Cycles continuously forever
-- 💡 Hidden "Override code required" hints
-- 🔔 System tray notifications during BSOD
-- 📊 Progress bar animation
-- 🔄 Scanning animations
-
-### Cancellation Sequence (on password entry)
-- ✅ Emergency shutdown with typing effect
-- 🔌 Terminating connections display
-- 📤 Canceling data exfiltration
-- 🔓 Decrypting files simulation
-- 🧹 Removing malware
-- 🛡️ Restoring system security
-- ✨ Flashing completion messages
-
----
-
-## ⏱️ Timeline
-
-| Time | Event |
-|------|-------|
-| **0:00** | Main hacking interface launches fullscreen |
-| **0:00 - 1:00** | Terminal commands, exploit scripts, logs, matrix rain |
-| **1:00** | Ransomware popup appears with 3-minute countdown |
-| **1:00 - 4:00** | Countdown runs, spy window tracks activity |
-| **4:00** | Countdown reaches 00:00 |
-| **4:03** | Fake BSOD appears with scrolling errors |
-| **BSOD runs forever** | Until password is entered |
-| **Anytime** | Type `neshley` for cancellation and exit |
-
-### Countdown Effects
-| Time Remaining | Effect |
-|----------------|--------|
-| 3:00 - 1:00 | Normal red countdown |
-| 1:00 - 0:30 | Brighter red |
-| 0:30 - 0:10 | Bold red, intense warnings |
-| 0:10 - 0:00 | Flashing white/red (emergency) |
-
----
-
-## 💿 Installation
-
-### Option 1: Run Standalone Executable (Easiest)
-1. Double-click `SystemUpdate.exe`
-2. No Python installation required
-3. Works on Windows 7/10/11
-
-### Option 2: Install with Shortcuts
-1. Right-click `install.bat` → Run as Administrator
-2. Creates Desktop and Start Menu shortcuts
-3. Installs to `C:\Program Files\SystemUpdate\`
-
-### Option 3: Run from Source
 ```bash
-# Clone or download the project
-cd hacker_simulation
-
-# Create virtual environment (optional)
+cd "Version 2"
 python -m venv venv
+# Windows
 venv\Scripts\activate
+# macOS / Linux
+# source venv/bin/activate
+```
 
-# Install requirements
+2. Install build tools if you plan to make an .exe (optional):
+
+```bash
 pip install -r requirements.txt
+```
 
-# Run
+3. Run the simulation directly (no build required):
+
+```bash
 python hacker_sim.py
 ```
 
----
+4. To create a Windows executable (optional):
 
-## 🎮 Usage
-
-1. **Launch** the program
-2. **Wait** 60 seconds for the ransomware popup
-3. **Watch** the 3-minute countdown
-4. **Type** `neshley` anywhere to cancel and exit
-
-### Interactions
-- **Move mouse**: Red crosshair follows cursor
-- **Click anywhere**: Triggers alert in logs
-- **Type anything**: Keystrokes are logged and counted
-- **Hover close button**: Button runs away, warning appears
-- **Click Pay button**: Shows "PAYMENT REJECTED"
-- **Try to close popup**: Time penalty added (+45 seconds)
-
----
-
-## 🔑 How to Exit
-
-### Normal Exit
-- **Type**: `neshley` (anywhere, anytime during the simulation)
-- Shows cancellation sequence with decryption progress
-- Cleanly exits after 5 seconds
-
-### Force Quit (if stuck)
-- **Windows**: `Win + D` → close terminal window
-- **Task Manager**: `Ctrl + Alt + Delete` → End Python process
-- **Alt+Tab**: Switch away, then close terminal
-
----
-
-## 🔨 Build from Source
-
-### Prerequisites
-- Python 3.6 or higher
-- Git (optional)
-
-### Build Steps
 ```bash
-# 1. Navigate to project folder
-cd hacker_simulation
-
-# 2. Run build script
+# from Version 2/
 python build.py
-```
-
-The build script will:
-1. Check Python version
-2. Create isolated virtual environment (`venv/`)
-3. Install PyInstaller
-4. Build standalone `SystemUpdate.exe`
-5. Create `install.bat` for Windows
-6. Package everything into `SystemUpdate_v1.0.zip`
-
-### Manual Build
-```bash
-pip install pyinstaller
+# or use pyinstaller directly:
 pyinstaller --onefile --windowed --name="SystemUpdate" hacker_sim.py
 ```
 
-Output: `dist/SystemUpdate.exe`
-
----
-
-## 📁 Project Structure
-
+## Files and structure
 ```
-hacker_simulation/
-│
-├── hacker_sim.py              # Main source code
-├── build.py                   # Build script (creates .exe)
-├── requirements.txt           # Python dependencies
-├── README.md                  # This file
-├── install.bat                # Windows installer
-│
-├── venv/                      # Virtual environment (created by build)
-│   ├── Scripts/
-│   │   ├── python.exe
-│   │   ├── pip.exe
-│   │   └── activate.bat
-│   └── Lib/
-│
-├── dist/                      # Output folder (created by build)
-│   └── SystemUpdate.exe       # Standalone executable
-│
-├── build/                     # Temporary build files
-│
-└── SystemUpdate_v1.0.zip      # Distribution package
+README.md (this file)
+Version 1/          # legacy reference variant
+  hacker_sim.py     # older variant
+  README1.md
+Version 2/          # canonical variant (use this)
+  hacker_sim.py     # current entrypoint
+  build.py          # helper for packaging (pyinstaller)
+  install.bat       # optional Windows installer script (packaging output)
+  requirements.txt
 ```
 
----
+## Safety notes (please read)
+- Do not run this on production machines or machines containing critical personal data. Use a disposable machine or VM if you want to demo the UI.
+- Inspect the code before building/distributing binaries. While the repository is intended as simulation-only, it contains strings and comments that resemble real attack commands; those are inert unless you deliberately copy them into executable code.
+- If you package and distribute an .exe, verify what the build pipeline includes; do not commit a built binary to source control unless you intend to distribute it.
 
-## 📋 Requirements
+## How to exit during the demo
+- Typing the escape word `neshley` anywhere while the app has focus will run the cancellation sequence and exit the program cleanly.
+- If the GUI becomes unresponsive, force-quit the Python process via Task Manager (Windows) or kill the process on other OSes.
 
-### Runtime (standalone .exe)
-- **Windows 7/10/11** (64-bit recommended)
-- **No Python required**
-- **No internet required**
-- **~15 MB disk space**
-
-### Development (from source)
-- **Python 3.6+**
-- **Tkinter** (included with Python on Windows)
-- **PyInstaller** (for building .exe)
-
-### Python Imports Used
-```python
-import tkinter          # GUI framework (standard library)
-from tkinter import font, scrolledtext, messagebox
-import time             # Timing functions
-import random           # Random generation
-import sys, os          # System operations
-import socket           # Get local IP only
-from datetime import datetime
-```
+## License & attribution
+Provided for educational/demonstration use only. See repository LICENSE (or contact the author) for reuse policies.
 
 ---
 
-## 🛡️ Safety
-
-### What This Program DOES
-- ✅ Displays text and graphics on screen
-- ✅ Shows your local network IP (192.168.x.x)
-- ✅ Logs keystrokes to on-screen display only
-
-### What This Program DOES NOT DO
-| ❌ Does NOT | Details |
-|-------------|---------|
-| **Encrypt files** | Never touches any user files |
-| **Delete data** | No files are deleted or modified |
-| **Access internet** | No network connections made |
-| **Steal information** | All data stays on your PC |
-| **Install malware** | No software installed anywhere |
-| **Modify registry** | Windows registry untouched |
-| **Access webcam** | Webcam never activated |
-| **Access microphone** | Microphone not used |
-| **Affect boot sector** | Computer boots normally after |
-
-### Verification
-- Check Task Manager: Only one Python process
-- No unusual network activity
-- No new files outside project folder
-- No startup entries added
-
----
-
-## ❓ FAQ
-
-**Q: Is this real malware?**
-A: No. It's a Python Tkinter GUI that displays scary text and animations. Completely harmless.
-
-**Q: Will it encrypt my files?**
-A: No. The "Files encrypted" counter is just a number increasing in a variable.
-
-**Q: Does it actually hack anything?**
-A: No. All IP addresses are randomly generated. No real network connections.
-
-**Q: Can I close it without the password?**
-A: Yes. Use Task Manager (`Ctrl+Alt+Delete`) or close the terminal.
-
-**Q: Why does it show my real IP?**
-A: It shows your local network IP (192.168.x.x), which is useless to actual hackers.
-
-**Q: Does it need internet?**
-A: No. Works completely offline.
-
-**Q: Can I run it on Mac/Linux?**
-A: The .exe is Windows-only. Source code works on any OS with Python and Tkinter.
-
-**Q: How do I share it?**
-A: Send `SystemUpdate_v1.0.zip` or just `SystemUpdate.exe`
-
----
-
-## 📸 Screenshots
-
-### Main Interface
-- Dual-panel layout
-- Left: Terminal with exploit commands
-- Right: Hacking monitor with logs
-- Matrix rain effect
-- Red crosshair cursor
-
-### Ransomware Popup
-- Fullscreen with red glow
-- "YOU HAVE BEEN HACKED" header
-- 3-minute countdown
-- Bitcoin wallet addresses
-- Real IP display
-- File encryption counter
-- DO NOT TURN OFF warning
-
-### Spy Window
-- Bottom-right corner
-- Eye animation
-- Activity monitoring
-- Escape attempt counter
-
-### Blue Screen of Death
-- Authentic Windows BSOD
-- Scrolling error codes
-- Progress bar
-- Hidden hints
-
-### Cancellation Sequence
-- Green-on-black terminal style
-- Typing effect
-- Decryption progress
-- System restore confirmation
-
----
-
-## ⚠️ Disclaimer
-
-```
-THIS SOFTWARE IS FOR EDUCATIONAL PURPOSES ONLY.
-
-This program is a VISUAL SIMULATION designed to demonstrate
-what a hacking/ransomware interface might look like. It does
-NOT perform any actual hacking, does NOT encrypt files, does
-NOT steal data, and does NOT connect to any external servers.
-
-The author is not responsible for any misuse of this software.
-Use only on your own computer or with explicit permission.
-
-By using this software, you agree to use it responsibly and
-only for educational/demonstration purposes.
-```
-
----
-
-## 📄 License
-
-This project is provided for **educational purposes only**. 
-
----
-
-## 👤 Author
-
-Created for classroom demonstration and educational use.
-
----
-
-## 🔗 Links
-
-- [Python Download](https://www.python.org/downloads/)
-- [Tkinter Documentation](https://docs.python.org/3/library/tkinter.html)
-- [PyInstaller Documentation](https://pyinstaller.org/)
-
----
-
-**Remember:** Type `neshley` to exit! 🔑
-
----
+_Type `neshley` to exit the demo when running._
